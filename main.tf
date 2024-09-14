@@ -61,7 +61,6 @@ resource "digitalocean_droplet" "jenkins" {
       "export ANSIBLE_HOST_KEY_CHECKING=False",
       "ansible-playbook /home/jenkins_setup.yml"
     ]
-    
   }
 }
 
@@ -90,8 +89,23 @@ resource "digitalocean_firewall" "jenkins_sg" {
   }
 
   outbound_rule {
-    protocol           = "tcp"
-    port_range         = "0"
-    destination_addresses = [ "0.0.0.0/0" ]
+    protocol              = "tcp"
+    port_range            = "53"
+    destination_addresses = ["0.0.0.0/0", "::/0"]
   }
+
+  outbound_rule {
+    protocol              = "udp"
+    port_range            = "53"
+    destination_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  outbound_rule {
+    protocol              = "icmp"
+    destination_addresses = ["0.0.0.0/0", "::/0"]
+  }
+}
+
+output "droplet_id" {
+  value = digitalocean_droplet.jenkins.ipv4_address
 }
