@@ -18,7 +18,7 @@ resource "digitalocean_droplet" "jenkins" {
   image  = "ubuntu-20-04-x64"
   name   = "web-1"
   region = "nyc3"
-  size   = "s-1vcpu-1gb"
+  size   = "s-2vcpu-4gb"
   ssh_keys = [
     "7f:4c:49:3b:4d:1e:ba:14:da:0b:ed:87:b0:1a:00:e0"
   ]
